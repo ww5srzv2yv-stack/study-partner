@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#182536">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Study Partner">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Study Partner</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div><p class="eyebrow">UNIVERSITY ENTRANCE EXAM</p><h1>Study Partner</h1></div>
+  <span class="tag">受験管理</span>
+</header>
+<nav class="tabs" aria-label="メインメニュー">
+  <button class="tab active" data-page="home">ホーム</button>
+  <button class="tab" data-page="books">参考書</button>
+  <button class="tab" data-page="record">学習記録</button>
+  <button class="tab" data-page="advisor">チャッピー相談</button>
+</nav>
+<main>
+<section id="home" class="page active">
+  <div class="hero"><div><p class="muted">今日の学習時間</p><strong id="today-hours">0分</strong></div><div><p class="muted">登録参考書</p><strong id="book-count">0冊</strong></div></div>
+  <div class="panel">
+    <div class="section-head"><h2>今日のタスク</h2><button class="text-btn" id="add-task-shortcut">＋追加</button></div>
+    <div id="task-list" class="task-list"></div>
+    <p id="no-tasks" class="muted small">タスクはまだありません。＋追加から登録できます。</p>
+  </div>
+  <div class="panel">
+    <h2>参考書の進捗</h2><div id="home-books"></div>
+  </div>
+  <div class="panel">
+    <h2>今日のひとこと</h2>
+    <p class="muted">記録を残すほど、計画の修正が正確になるよ。完璧な一日より、続けられる仕組みを大切に。</p>
+  </div>
+</section>
+
+<section id="books" class="page">
+  <div class="section-head"><h2>参考書ライブラリ</h2><button class="primary small-btn" id="show-book-form">＋参考書</button></div>
+  <div class="filters" id="book-filters">
+    <button class="filter active" data-filter="すべて">すべて</button><button class="filter" data-filter="数学">数学</button><button class="filter" data-filter="化学">化学</button><button class="filter" data-filter="物理">物理</button><button class="filter" data-filter="英語">英語</button><button class="filter" data-filter="その他">その他</button>
+  </div>
+  <form id="book-form" class="panel form hidden">
+    <h3>参考書を登録</h3>
+    <label>参考書名<input id="book-name" required placeholder="例：重要問題集 化学"></label>
+    <label>科目<select id="book-subject"><option>数学</option><option>化学</option><option>物理</option><option>英語</option><option>国語</option><option>その他</option></select></label>
+    <label>総問題数・総単語数<input id="book-total" type="number" min="0" placeholder="分かる場合のみ"></label>
+    <button class="primary">登録する</button>
+  </form>
+  <div id="book-list"></div>
+</section>
+
+<section id="record" class="page">
+  <h2>学習記録</h2>
+  <form id="record-form" class="panel form">
+    <label>日付<input id="record-date" type="date" required></label>
+    <label>科目<select id="record-subject"><option>数学</option><option>化学</option><option>物理</option><option>英語</option><option>国語</option><option>その他</option></select></label>
+    <label>参考書<select id="record-book"><option value="">参考書を選択（任意）</option></select></label>
+    <div class="two">
+      <label>勉強時間（分）<input id="record-minutes" type="number" min="0" value="30"></label>
+      <label>演習数・学習数<input id="record-count" type="number" min="0" value="0"></label>
+    </div>
+    <label>理解度<select id="record-understanding"><option value="A">A：自力で解ける</option><option value="B">B：解説を見れば理解</option><option value="C">C：まだ難しい</option></select></label>
+    <label>振り返り<textarea id="record-note" rows="3" placeholder="できたこと、詰まったところ、次に復習したいこと"></textarea></label>
+    <button class="primary">記録を保存</button>
+  </form>
+  <div class="panel"><h2>最近の記録</h2><div id="record-list"></div></div>
+</section>
+
+<section id="advisor" class="page">
+  <h2>チャッピー相談室</h2>
+  <div class="panel">
+    <p>学習記録と参考書の状態をまとめて、チャッピーに相談できるよ。下のボタンで状況をコピーして、このチャットに貼り付けてね。</p>
+    <button class="primary" id="copy-summary">学習状況をコピー</button>
+    <p id="copy-status" class="muted small" aria-live="polite"></p>
+  </div>
+  <div class="panel">
+    <h3>相談の例</h3>
+    <ul><li>今週の進捗から来週の計画を組み直して</li><li>数学と化学の配分を見直したい</li><li>理解度Cの問題を優先して復習計画を作って</li><li>志望校の二次試験を意識した勉強に切り替えたい</li></ul>
+  </div>
+  <div class="panel">
+    <h3>データ管理</h3>
+    <p class="muted small">データはこの端末のブラウザ内に保存されます。機種変更・ブラウザデータ削除に備えて、定期的にバックアップしてください。</p>
+    <div class="button-row"><button id="export-data">バックアップを書き出す</button><label class="file-button">バックアップを読み込む<input id="import-data" type="file" accept="application/json"></label></div>
+  </div>
+</section>
+</main>
+<footer>Study Partner · あなたの受験を一緒に管理</footer>
+<script src="app.js"></script>
+</body></html>
